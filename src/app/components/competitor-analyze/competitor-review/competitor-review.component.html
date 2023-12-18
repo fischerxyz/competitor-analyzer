@@ -1,0 +1,47 @@
+<div *ngIf="competitorReviews.length == 0">
+    <mat-spinner></mat-spinner>
+</div>
+<div *ngIf="competitorReviews.length > 0" class="competitor-reviews">
+    <div *ngFor="let competitorReview of competitorReviews" class="competitor-review">
+        <div class="companyName">
+            {{competitorReview.name}}
+        </div>
+        <div>
+            <mat-icon>location_on</mat-icon>
+            {{competitorReview.location}}
+        </div>
+        <div>
+            <mat-icon>groups</mat-icon>
+            {{competitorReview.employee_count}}
+        </div>
+        <div>
+            <mat-icon>payments</mat-icon>
+            {{competitorReview.revenue}}
+        </div>
+        <div>
+            <mat-icon>public</mat-icon>
+            {{competitorReview.size}}
+        </div>
+        <div>
+            <mat-icon>grading</mat-icon>
+            {{competitorReview.business_area}}
+        </div>
+    </div>
+    <table id="competitor-review-table">
+        <tr>
+          <th>Name</th>
+          <th>Employee Count</th>
+          <th>Revenue</th>
+          <th>Size</th>
+          <th>Business Area</th>
+        </tr>
+        <tr *ngFor="let competitorReview of competitorReviews">
+          <td>{{competitorReview.name}}</td>
+          <td>{{competitorReview.employee_count}}</td>
+          <td>{{competitorReview.revenue}}</td>
+          <td>{{competitorReview.size}}</td>
+          <td>{{competitorReview.business_area}}</td>
+        </tr>
+    </table>
+</div>
+

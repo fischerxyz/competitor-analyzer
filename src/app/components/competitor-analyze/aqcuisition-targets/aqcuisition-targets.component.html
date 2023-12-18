@@ -1,0 +1,43 @@
+<div *ngIf="acquisitionTargets.length == 0">
+    <mat-spinner></mat-spinner>
+</div>
+<div *ngIf="acquisitionTargets.length > 0" class="acquisition-targets">
+    <div *ngFor="let acquisitionTarget of acquisitionTargets" class="acquisition-target">
+        <div class="companyName">
+            {{acquisitionTarget.name}}
+        </div>
+        <div>
+            <mat-icon>location_on</mat-icon>
+            {{acquisitionTarget.location}}
+        </div>
+        <div>
+            <mat-icon>description</mat-icon>
+            {{acquisitionTarget.description}}
+        </div>
+        <div>
+            <mat-icon>attach_money</mat-icon>
+            {{acquisitionTarget.revenue}}
+        </div>
+        <div>
+            <mat-icon>grading</mat-icon>
+            {{acquisitionTarget.patents}}
+        </div>
+    </div>
+    <table id="acquisition-target-table">
+        <tr>
+          <th>Name</th>
+          <th>Location</th>
+          <th>Description</th>
+          <th>Revenue</th>
+          <th>Patents</th>
+        </tr>
+        <tr *ngFor="let acquisitionTarget of acquisitionTargets">
+          <td>{{acquisitionTarget.name}}</td>
+          <td>{{acquisitionTarget.location}}</td>
+          <td>{{acquisitionTarget.description}}</td>
+          <td>{{acquisitionTarget.revenue}}</td>
+          <td>{{acquisitionTarget.patents}}</td>
+        </tr>
+    </table>
+</div>
+

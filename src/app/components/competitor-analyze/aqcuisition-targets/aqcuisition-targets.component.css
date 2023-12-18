@@ -1,0 +1,32 @@
+.acquisition-targets{
+    justify-content: center;
+    width: 100%;
+    >.acquisition-target{
+        background-color: rgb(187, 187, 255);
+        margin: 2em auto;
+        border: 1px solid black;
+        border-radius: 1em;
+        width: 90%;
+        padding: 1em;
+        transition: 0.1s;
+        >.companyName{
+            font-size: 1.6em;
+            margin: 0.4em;
+            font-weight: 500;
+        }
+        >div{
+            display: flex;
+            align-items: center;
+            >mat-icon{
+                margin: 0.4em;
+            }
+        }
+    }
+}
+
+mat-spinner{
+    margin: auto;
+}
+
+
+

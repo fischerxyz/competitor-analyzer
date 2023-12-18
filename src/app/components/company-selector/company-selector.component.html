@@ -1,0 +1,35 @@
+<div class="company-selector">
+    <div class="search-bar">
+        <mat-form-field appearance="outline" style="width: 800px;" >
+            <mat-label>Company Name</mat-label>
+            <input (keydown.enter)="sendRequest()" type="text" matInput placeholder="Please enter a company name" [(ngModel)]="search" [disabled]="isSearching">
+    
+            <button *ngIf="search != ''"  matSuffix mat-icon-button aria-label="Clear" (click)="search = ''">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+    </div>
+    <div *ngIf="isSearching">
+        <div class="companySearchIndicator">
+            Searching for companies...
+        </div>
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </div>
+    <div *ngIf="companyDetails.length > 0 && !isSearching" class="company-details">
+        <div *ngFor="let companyDetail of companyDetails" class="card" (click)="getCompanyAnalyze(companyDetail)">
+            <h3>
+                {{companyDetail.name}}
+            </h3>
+            <div>
+                {{companyDetail.business_area}}
+            </div>
+            <div>
+                {{companyDetail.employee_count}}
+            </div>
+            <div>
+                {{companyDetail.size}}
+            </div>
+        </div>
+    </div>
+</div>
+

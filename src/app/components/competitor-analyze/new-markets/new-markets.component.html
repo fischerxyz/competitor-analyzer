@@ -1,0 +1,24 @@
+<div *ngIf="newMarkets.length == 0">
+    <mat-spinner></mat-spinner>
+</div>
+<div *ngIf="newMarkets.length > 0" class="new-markets">
+    <div *ngFor="let newMarket of newMarkets" class="new-market">
+        <div class="marketName">
+            {{newMarket.name}}
+        </div>
+        <div>
+            {{newMarket.description}}
+        </div>
+    </div>
+    <table id="new-market-table">
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+        </tr>
+        <tr *ngFor="let newMarket of newMarkets">
+          <td>{{newMarket.name}}</td>
+          <td>{{newMarket.description}}</td>
+        </tr>
+    </table>
+</div>
+

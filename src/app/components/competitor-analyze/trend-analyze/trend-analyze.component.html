@@ -1,0 +1,24 @@
+<div *ngIf="trendAnalyzes.length == 0">
+    <mat-spinner></mat-spinner>
+</div>
+<div *ngIf="trendAnalyzes.length > 0" class="trend-analyzes">
+    <div *ngFor="let trendAnalyze of trendAnalyzes" class="trend-analyze">
+        <div class="trendName">
+            {{trendAnalyze.name}}
+        </div>
+        <div>
+            {{trendAnalyze.description}}
+        </div>
+    </div>
+    <table id="trend-analyze-table">
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+        </tr>
+        <tr *ngFor="let trendAnalyze of trendAnalyzes">
+          <td>{{trendAnalyze.name}}</td>
+          <td>{{trendAnalyze.description}}</td>
+        </tr>
+    </table>
+</div>
+
