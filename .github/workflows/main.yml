@@ -14,7 +14,7 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Build
-        run: ng build --configuration production --base-href /competitor-analyzer/
+        run: npm build --configuration production --base-href /competitor-analyzer/
         env:
           OPENAI_APIKEY: ${{ secrets.OPENAI_APIKEY  }}
           OPENAI_ORGANIZATION: ${{ secrets.OPENAI_ORGANIZATION }}
