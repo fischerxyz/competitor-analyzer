@@ -22,4 +22,4 @@ jobs:
     - name: Remove old files
       run: sudo rm -r /var/www/competitor-analyzer
     - name: Copy files
-      run: sudo cp -r -f /etc/actions-runner/_work/competitor-analyzer/competitor-analyzer/dist/competitor-analyzer/. /var/www/competitor-analyzer
+      run: sudo cp -r -f /etc/actions-runner_competitor-analyzer/_work/competitor-analyzer/competitor-analyzer/dist/competitor-analyzer/. /var/www/competitor-analyzer
