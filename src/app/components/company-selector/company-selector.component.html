@@ -1,4 +1,4 @@
-<div class="company-selector">
+<div *ngIf="!isSelected" class="company-selector">
     <div class="search-bar">
         <mat-form-field appearance="outline" style="width: 800px;" >
             <mat-label>Company Name</mat-label>
@@ -16,7 +16,7 @@
         <mat-progress-bar mode="indeterminate"></mat-progress-bar>
     </div>
     <div *ngIf="companyDetails.length > 0 && !isSearching" class="company-details">
-        <div *ngFor="let companyDetail of companyDetails" class="card" (click)="getCompanyAnalyze(companyDetail)">
+        <div *ngFor="let companyDetail of companyDetails" class="card" (click)="selectCompany(companyDetail)">
             <h3>
                 {{companyDetail.name}}
             </h3>
@@ -32,4 +32,49 @@
         </div>
     </div>
 </div>
+<div *ngIf="isSelected" class="company-selector" style="display: grid">
+    <div class="selected-card" (click)="getCompanyAnalyze()">
+        <h3>
+            {{selectedCompany.name}}
+        </h3>
+        <div>
+            {{selectedCompany.business_area}}
+        </div>
+        <div>
+            {{selectedCompany.employee_count}}
+        </div>
+        <div>
+            {{selectedCompany.size}}
+        </div>
+    </div>
+    <mat-form-field>
+        <mat-label>Markets</mat-label>
+        <mat-select [formControl]="selectedMarkets" multiple>
+          <mat-select-trigger>
+            {{selectedMarkets.value?.[0] || ''}}
+            <span *ngIf="(selectedMarkets.value?.length || 0) > 1" class="additional-selection">
+              (+{{(selectedMarkets.value?.length || 0) - 1}} {{selectedMarkets.value?.length === 2 ? 'other' : 'others'}})
+            </span>
+          </mat-select-trigger>
+          <mat-option *ngFor="let market of markets" [value]="market">{{market}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Business Areas</mat-label>
+        <mat-select [formControl]="selectedBusinessAreas" multiple>
+          <mat-select-trigger>
+            {{selectedBusinessAreas.value?.[0] || ''}}
+            <span *ngIf="(selectedBusinessAreas.value?.length || 0) > 1" class="additional-selection">
+              (+{{(selectedBusinessAreas.value?.length || 0) - 1}} {{selectedBusinessAreas.value?.length === 2 ? 'other' : 'others'}})
+            </span>
+          </mat-select-trigger>
+          <mat-option *ngFor="let businessArea of businessAreas" [value]="businessArea">{{businessArea}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <button (click)="getCompanyAnalyze()">
+        Send request
+    </button>
+</div>
+
+
 

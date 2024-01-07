@@ -54,18 +54,18 @@ export class OpenAiService {
     this.sendMessage(content, RequestType.CompanySelector);
   }
 
-  getCompanyAnalyze(companyDetail: CompanyDetail){
+  getCompanyAnalyze(companyDetail: CompanyDetail, markets: string[], businessAreas: string[]){
     //Competitor Review
-    var content = this.addQuestionForCompetitorReview(companyDetail);
+    var content = this.addQuestionForCompetitorReview(companyDetail, markets, businessAreas);
     this.sendMessage(content, RequestType.CompetitorReview);
     //Trend Analyze
-    var content = this.addQuestionForTrendAnalyze(companyDetail);
+    var content = this.addQuestionForTrendAnalyze(companyDetail, markets, businessAreas);
     this.sendMessage(content, RequestType.TrendAnalyze);
     //New Market Identification
-    var content = this.addQuestionForNewMarketIdentification(companyDetail);
+    var content = this.addQuestionForNewMarketIdentification(companyDetail, markets, businessAreas);
     this.sendMessage(content, RequestType.NewMarket);
     //Acquisition Target
-    var content = this.addQuestionForAcquisitionTarget(companyDetail);
+    var content = this.addQuestionForAcquisitionTarget(companyDetail, markets, businessAreas);
     this.sendMessage(content, RequestType.AcquisitionTarget);
   }
 
@@ -73,8 +73,10 @@ export class OpenAiService {
   private sendMessage(content: string, requestType: RequestType){
     this.messages.push(new OpenAiMessage("user", content));
     var message = "";
+    console.log(content)
     const stream = this.openai.chat.completions.create({
       model: "gpt-3.5-turbo",
+      temperature: 0.1,
      
       messages: [{ role: "user", content: content }],
     }
@@ -136,28 +138,40 @@ export class OpenAiService {
 
     return "Create an overview with the size, employee_count and business_area about the 10 biggest companies with the name '" + content + "'. The data doesn't have to be current. The data schema should be like this:" + JSON.stringify(companies);
   }
-  private addQuestionForCompetitorReview(companyDetail: CompanyDetail): string{
+  private addQuestionForCompetitorReview(companyDetail: CompanyDetail, markets: string[], businessAreas: string[]): string{
     var competitorReviews = new CompetitorReviews();
     competitorReviews.competitors.push(new CompetitorReview("Testname", "Berlin, Germany", "Large", "3 Million", "10,000", "Semiconductors"));
 
-    return  "Create a competitor review with location, size, revenue and employee_count for the company " + companyDetail.name + " in the business area " + companyDetail.business_area + ". The data doesn't have to be current. The data schema should be like this:" + JSON.stringify(competitorReviews); 
+    var marketString = markets.join(" and ");
+    var businessAreaString = businessAreas.join(" and ");
+
+    return  "Create a competitor review with location, size, revenue and employee_count for the 20 biggest competitors of the company " + companyDetail.name + " in the business areas " + businessAreaString + ". This should be for the following markets: " + marketString + ". The data doesn't have to be current. The data schema should be like this:" + JSON.stringify(competitorReviews); 
   }
-  private addQuestionForTrendAnalyze(companyDetail: CompanyDetail): string{
+  private addQuestionForTrendAnalyze(companyDetail: CompanyDetail, markets: string[], businessAreas: string[]): string{
     var trendAnalyzes = new TrendAnalyzes();
     trendAnalyzes.trendAnalyzes.push(new TrendAnalyze("Testarea", "Creating new products"));
 
-    return  "Create a trend research for the company " + companyDetail.name + " in the business area " + companyDetail.business_area + ". The data doesn't have to be current. The data schema should be like this:" + JSON.stringify(trendAnalyzes);
+    var marketString = markets.join(" and ");
+    var businessAreaString = businessAreas.join(" and ");
+
+    return  "Create a trend research for the company " + companyDetail.name + " in the business areas " + businessAreaString + ". This should be for the following markets: " + marketString + ". The data doesn't have to be current. The data schema should be like this:" + JSON.stringify(trendAnalyzes);
   }
-  private addQuestionForNewMarketIdentification(companyDetail: CompanyDetail): string{
+  private addQuestionForNewMarketIdentification(companyDetail: CompanyDetail, markets: string[], businessAreas: string[]): string{
     var newMarket = new NewMarkets();
     newMarket.newMarkets.push(new NewMarket("Testmarket", "Creating new products"));
 
-    return  "Create an identification of possible new markets for the company " + companyDetail.name + " in the business area " + companyDetail.business_area + ". The data doesn't have to be current.  The data schema should be like this:" + JSON.stringify(newMarket); 
+    var marketString = markets.join(" and ");
+    var businessAreaString = businessAreas.join(" and ");
+
+    return  "Create an identification of possible new markets for the company " + companyDetail.name + " in the business areas " + businessAreaString + ". This should be for the following markets: " + marketString + ". The data doesn't have to be current. The data schema should be like this:" + JSON.stringify(newMarket); 
   }
-  private addQuestionForAcquisitionTarget(companyDetail: CompanyDetail): string{
+  private addQuestionForAcquisitionTarget(companyDetail: CompanyDetail, markets: string[], businessAreas: string[]): string{
     var acquisitionTargets = new AcquisitionTargets();
     acquisitionTargets.acquisitionTargets.push(new AcquisitionTarget("Testmarket", "Producing Semiconductors", "Berlin, Germany", "Semiconductor manifacturing", "3 Million"));
 
-    return  "Create a review of possible acquisition targets, with the patents, revenue, location and employee_count for the company " + companyDetail.name + " in the business area " + companyDetail.business_area + ". The data doesn't have to be current. .  The data schema should be like this:" + JSON.stringify(acquisitionTargets); 
+    var marketString = markets.join(" and ");
+    var businessAreaString = businessAreas.join(" and ");
+
+    return  "Create a review of 20 possible acquisition targets, with the patents, revenue, location and employee_count for the company " + companyDetail.name + " in the business areas " + businessAreaString + ". This should be for the following markets: " + marketString + ". The data doesn't have to be current.  The data schema should be like this:" + JSON.stringify(acquisitionTargets); 
   }
 }

@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { OpenAiService } from '../../services/open-ai/open-ai.service';
 import { CompanyDetail, CompanyDetails } from 'src/app/classes/companyDetail';
+import { FormControl, UntypedFormArray } from '@angular/forms';
 
 @Component({
   selector: 'company-selector',
@@ -13,7 +14,24 @@ export class CompanySelectorComponent {
   companyDetails: CompanyDetail[] = [];
   search = "";
   isSearching: boolean = false
+  selectedCompany: CompanyDetail = new CompanyDetail("", "", "", ""); 
+  isSelected: boolean = false;
 
+
+  selectedMarkets = new FormControl();
+  markets: string[] = [
+    "Europe",
+    "North America",
+    "South America",
+    "Africa",
+    "Asia",
+    "Middle East"
+  ];
+
+  selectedBusinessAreas = new FormControl();
+  businessAreas: string[] = [
+  ];
+  
   constructor(private openaiService: OpenAiService){
     this.openaiService.companySelectorObservable.subscribe(cd => {
       this.companyDetails = cd;
@@ -21,15 +39,40 @@ export class CompanySelectorComponent {
     });
   }
 
-  getCompanyAnalyze(companyDetail: CompanyDetail){
-    this.companySelectedEvent.emit(companyDetail);
-    this.openaiService.getCompanyAnalyze(companyDetail);
+  getCompanyAnalyze(){
+    this.companySelectedEvent.emit(this.selectedCompany);
+
+    var selectedMarkets = this.selectedMarkets.value as string[];
+    var selectedBusinessAreas = this.selectedBusinessAreas.value as string[];
+
+    this.openaiService.getCompanyAnalyze(this.selectedCompany, selectedMarkets, selectedBusinessAreas);
+  }
+
+  selectCompany(companyDetail: CompanyDetail){
+    this.selectedCompany = companyDetail;
+    if(companyDetail.business_area != undefined){
+      var businessAreas = companyDetail.business_area?.split(/[ .:;?!~,`"&|()<>{}\[\]\r\n/\\]+/);
+      if(businessAreas == undefined || businessAreas.length == 0){
+        this.businessAreas.push(companyDetail.business_area);
+      }
+      else{
+        this.businessAreas = businessAreas;
+      }
+    }
+
+    this.isSelected = true; 
   }
 
   sendRequest(){
     this.isSearching = true;
     this.openaiService.getCompanySelector(this.search);
   }
+
+  sendRequests() {
+    console.log(this.selectedMarkets.value)
+    console.log(this.selectedBusinessAreas.value)
+  }
+
 }
-export { CompanyDetail };
+
 

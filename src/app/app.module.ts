@@ -11,8 +11,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSelectModule } from '@angular/material/select';
 
 import { CompanySelectorComponent } from './components/company-selector/company-selector.component';
 import { AcquisitionTargetsComponent } from './components/competitor-analyze/aqcuisition-targets/aqcuisition-targets.component';
@@ -36,6 +37,7 @@ import { CompetitorAnalyzeComponent } from './components/competitor-analyze/comp
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    ReactiveFormsModule,
 
     //Material
     MatInputModule,
@@ -46,6 +48,7 @@ import { CompetitorAnalyzeComponent } from './components/competitor-analyze/comp
     MatButtonModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,
+    MatSelectModule,
     FormsModule
   ],
   providers: [],

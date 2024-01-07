@@ -36,3 +36,19 @@
     text-align: center;
     margin: 1em;
 }
+
+.additional-selection {
+    opacity: 0.75;
+    font-size: 0.75em;
+}
+
+.selected-card{
+    margin: 2em 0;
+    background-color: rgb(187, 187, 255);
+    border: 1px solid black;
+    border-radius: 1em;
+    height: 8em;
+    width: 26em;
+    padding: 3em;
+    transition: 0.1s;
+}
